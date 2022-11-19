@@ -1,0 +1,30 @@
+import json
+import wiotp.sdk.device
+import time
+myConfig={"identity":{"orgId":"bj2yxw",
+                      "typeId":"Testdevice",
+                      "deviceId":"12345678"
+                      },
+          "auth":{
+              "token":"Gayathri@09"
+              }
+          }
+client = wiotp.sdk.device.DeviceClient(config=myConfig, logHandlers=None)
+client.connect()
+while True:
+    name="Child-In area"
+    #in area location
+    
+    latitude=8.7045
+    longitude=77.73999
+    #name="Child-Out of area"
+    #out area location
+    
+    #latitude=8.7052
+    #longitude=77.74002
+    myData={"name" : name,"lat":latitude,"lon":longitude}
+    client.publishEvent(eventId="status", msgFormat="json", data=myData, qos=0, onPublish=None)
+    print("Data published to IBM Iot platform",myData)
+    time.sleep(5)
+client.disconnect()
+
